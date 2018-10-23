@@ -27,7 +27,6 @@ app.get('/divide', (req, res) => {
     });
 
 // Create a post route that accepts a username and password
-
 // if they match send a json with a status of "logged in" or respond with a json that has a status of "invalid credentials"
 // app.get('/login', (req, res) => {
     // res.send(`<h1>You can log in now</h1>`);
@@ -46,36 +45,43 @@ app.post('/login/:name/:pass', (req, res) => {
     });
 
 // create a global variable array
-// Create a post request that has an item attribute. Add the item to the array.
+// Create a post request that has an item attribute. 
 app.post('/data/:item', (req, res) => {
     const item = req.params.item;
-    const newItem = swArray.push(item);
+    const isItThere = swArray.indexOf(item);
     console.log(swArray);
+    
+   if(isItThere == -1) {
+        // Add the item to the array.
+        swArray.push(item);
+        console.log(swArray);
+        res.json({message: `${item} has been added to this array!`});
+        }
+         else { 
+             // 409 = CONFLICT status code
+             res.status(409).json({message: `The item ${item} already exists in this array.`});
+            } 
     });
-
+   
 // create a delete request that has an item attribute. 
 // remove the item from the array.indexOf() will find whether there is anything in the array.
 app.delete('/data/:item', (req, res) => {
     const item = req.params.item;
+    const isItThere = swArray.indexOf(item);
     
-    if(
+    if (isItThere != -1) {
+            swArray.splice(isItThere, 1);
+            res.json(swArray);
+            console.log(swArray);
+            } else {
+            // the routes should respond back with an error if the item does not exist in the array 
+             res.status(404).json(`${item} was not found in this array.`);
+            } 
     });
-// If it returns -1, it means the array is empty
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`))
 
 
-
-
-
-
-
-
-
-
-
-
-
-// the routes should respond back with an error if the user tries to add an item that already exists in the array
-// the routes should respond back with an error if the item does not exist in the array.
 
 // extra credit. Find out how to respond with the correct http status code for the two errors.
