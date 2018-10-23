@@ -29,21 +29,19 @@ app.get('/divide', (req, res) => {
 // Create a post route that accepts a username and password
 
 // if they match send a json with a status of "logged in" or respond with a json that has a status of "invalid credentials"
-app.get('/login', (req, res) => {
-    res.send(`<h1>You can log in now</h1>`);
-    });
+// app.get('/login', (req, res) => {
+    // res.send(`<h1>You can log in now</h1>`);
+    // });
     
 app.post('/login/:name/:pass', (req, res) => {
-    const username = req.body.name;
-    const password = req.body.pass;
+    const username = req.params.name;
+    const password = req.params.pass;
     
     // check to see if the username and password send match. 
     if (username !== "Chewbacca" && password !== "Wookie1979") {
         res.json('invalid credentials');
         } else {
-            console.log('Working');
-            res.status(200);
-            res.json('logged in');  
+            res.status(200).json('logged in');  
             }
     });
 
@@ -53,9 +51,16 @@ app.post('/data/:item', (req, res) => {
     const item = req.params.item;
     const newItem = swArray.push(item);
     console.log(swArray);
-    
     });
 
+// create a delete request that has an item attribute. 
+// remove the item from the array.indexOf() will find whether there is anything in the array.
+app.delete('/data/:item', (req, res) => {
+    const item = req.params.item;
+    
+    if(
+    });
+// If it returns -1, it means the array is empty
 app.listen(port, () => console.log(`Listening on port ${port}`))
 
 
@@ -68,7 +73,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`))
 
 
 
-// create a delete request (works like post) that has an item attribute. remove the item from the array.indexOf() will find whether there is anything in the array. If it returns -1, it means the array is empty
+
 
 // the routes should respond back with an error if the user tries to add an item that already exists in the array
 // the routes should respond back with an error if the item does not exist in the array.
