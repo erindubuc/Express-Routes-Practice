@@ -1,0 +1,17 @@
+{
+  "name": "expressroutes",
+  "version": "1.0.0",
+  "description": "assignment to create routes using express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Erin Dubuc",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.4"
+  }
+}
