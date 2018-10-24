@@ -1,20 +1,22 @@
-/*global swArray*/
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
+const swArray = ['Storm Trooper', 'Darth Vader', 'Yoda', 'Luke', 'R2D2'];
+
+// ROUTERS
 const partOne = require('./routes/partOne');
-// on this route, use posts
-app.use('/routes/partOne', partOne)
+const todo = require('./routes/todo');
+app.use('/routes/partOne', partOne);
+app.use('/routes/todo', todo); 
 
-swArray = ['Storm Trooper', 'Darth Vader', 'Yoda', 'Luke', 'R2D2'];
 
-// want express to use the body-parser
+// BODY-PARSER
 app.use(bodyParser.urlencoded({ extended: false }));
-// check to see if it is in a url encoded format - then parse it into json format
+//JSON
 app.use(bodyParser.json());
 
-//send a get request that displays my name
+//GET request that displays my name
 app.get ('/', (req, res) => {
     res.send('<h1>Erin</h1');
     // status 200 OK
@@ -33,9 +35,16 @@ app.get('/divide', (req, res) => {
     const num1 = parseInt(req.query.num1, 10);
     const num2 = parseInt(req.query.num2, 10);
     const result = Math.floor(num1 / num2);
-    res.send(`<h1>${num1} / ${num2} = ${result} (this number may be rounded)</h1>`);
-    // status 200 OK
-    res.status(200);
+    
+    // IF user provides no query parameters--> throw error 
+    if(!num1 || !num2) {
+        // status 400 = Invalid request
+        res.status(400).send(`Please enter 2 numbers.`);
+        } else {
+            res.status(200).send(`<h1>${num1} / ${num2} = ${result} (this number may be rounded)</h1>`);
+            // status 200 OK
+            // res.status(200);
+        }
     });
 
 // POST route that accepts a username and password    
@@ -88,8 +97,6 @@ app.delete('/data/:item', (req, res) => {
     });
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 
-
-// extra credit. Find out how to respond with the correct http status code for the two errors.

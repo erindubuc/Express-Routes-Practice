@@ -1,4 +1,4 @@
-/*global swArray*/
+// partOne router
 const express = require('express');
 const partOneRouter = express.Router();
 
