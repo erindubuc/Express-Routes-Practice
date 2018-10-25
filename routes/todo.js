@@ -1,7 +1,9 @@
 // to-do router
 const express = require('express');
-const todoRouter = express.Router();
+// initiate router
+let router = express.Router();
 
+// array of todos
 const todos = [
     {
         id: 1,
@@ -35,5 +37,22 @@ const todos = [
         },
     ];
 
+router.route('/todo', (req, res, next) => {
+    res.status(200).json('Yahooooo!');
+    next();
+});
+router.get('/todo', (req, res) => {
+    // const index = todos.findIndex(element => {
+    //     return element.task
+    //     }
+    res.send(`${todos}`);
+    }); 
 
-module.exports = todoRouter;
+// GET request to return all todos 
+// router.get('/to do', (req, res) => {
+//         res.status(200).json({message: "WOW, it's really working!"});
+//         }
+// );
+
+
+module.exports = router;
